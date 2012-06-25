@@ -1,57 +1,44 @@
+
+console = window.console || function() {};
+
 require.config({
     // Base URL relative to the test runner
     // Paths are relative to this
     baseUrl: '../src/js/',
     paths: {
         // Testing libs
-        'chai'        	: '../../test/support/chai',
-        'common'        : '../test/common',
-        'jquery'        : 'vendor/jquery',
-        'underscore'    : 'vendor/underscore',
-        'backbone'      : 'vendor/backbone',
-        'text'          : 'vendor/require-text',
-        'handlebars'    : 'vendor/handlebars',
-        'highcharts'    : 'vendor/highcharts',
-        'bootstrap'     : 'vendor/bootstrap',
+        'jquery'        : 'vendor/jquery-1.7.2',
+        'underscore'    : 'vendor/underscore-1.3.3',
+        'backbone'      : 'vendor/backbone-0.9.2',
+        'text'          : 'vendor/require-text-2.0.0',
+        'handlebars'    : 'vendor/handlebars-1.0.0.beta.6',
         'chaplin'       : 'vendor/chaplin'
       },
       shim: {
-        underscore: {
-          attach: '_'
-        },
         backbone: {
           deps: ['underscore', 'jquery'],
-          attach: function(_, $) {
-            console.log(Backbone);
-            return Backbone;
-          }
-      	},
-      	mocha: {
-      		attach: 'mocha'
-      	}
+          exports: 'Backbone'
+        },
+        underscore: {
+          exports: '_'
+        }
       },
-      priority: [
-      'jquery',
-      'underscore',
-      'common'
-      ]
+      urlArgs:'uncache=' + (new Date()).getTime()
     });
 
-mocha.setup({
-	ui: 'bdd',
-	ignoreLeaks: true
-});
+require(['require', '../../test/support/chai', '../../test/support/sinon', '../../node_modules/mocha/mocha.js'], function(require, chai, sinon) {
+  assert = chai.assert;
+  should = chai.should();
+  expect = chai.expect;
 
-console = window.console || function() {};
+  mocha.setup({
+    ui: 'bdd',
+    ignoreLeaks: true
+  });
 
-var runMocha = function() {
-	mocha.run();
-};
-
-var testsuites = function() {
  require([
-      '../../test/hello_world_application_spec',
-    ], runMocha); 
-};
-
-setTimeout(testsuites, 1000);
+    '../../test/js/hello_world_application_spec'
+  ], function() {
+     mocha.run()
+  }); 
+});
