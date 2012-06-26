@@ -1,4 +1,5 @@
 # Test HelloWorldApplication
+# You need to load chaplin and all the files that you actually require to test
 
 define [
   'chaplin'
