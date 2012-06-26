@@ -26,7 +26,13 @@ require.config({
       urlArgs:'uncache=' + (new Date()).getTime()
     });
 
-require(['require', '../../test/support/chai', '../../test/support/sinon', '../../node_modules/mocha/mocha.js'], function(require, chai, sinon) {
+require([
+  'require', 
+  '../../test/support/chai', 
+  '../../test/support/sinon', 
+  '../../node_modules/mocha/mocha.js'], 
+  function(require, chai, sinon) {
+  
   assert = chai.assert;
   should = chai.should();
   expect = chai.expect;
